@@ -933,7 +933,7 @@ export default function HabitTracker() {
             {/* Today's Progress */}
             <div className={`p-6 rounded-xl shadow-md mb-8 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold">Today's Progress</h3>
+                <h3 className="text-xl font-bold">Todays Progress</h3>
                 <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
                   {format(new Date(), 'EEE, MMM d')}
                 </p>
