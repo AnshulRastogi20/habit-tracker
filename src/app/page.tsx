@@ -692,7 +692,14 @@ export default function HabitTracker() {
             >
               📊
             </motion.div>
-            <h1 className="text-xl font-bold">HabitTracker</h1>
+            <a 
+              href="https://www.anshulrastogi.me/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xl font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              HabitTracker
+            </a>
           </div>
           
           <div className="hidden md:flex items-center gap-6">
