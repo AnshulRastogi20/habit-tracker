@@ -9,6 +9,7 @@ import {
 import { format, parseISO, startOfWeek, eachDayOfInterval, addDays, isSameDay, isAfter, subDays } from 'date-fns';
 import _ from 'lodash';
 import React from 'react'; // Import React for type definitions like React.MouseEvent
+import Image from 'next/image';
 
 // Types
 type Habit = {
@@ -32,7 +33,7 @@ type Entry = {
 
 type User = {
   name: string;
-  avatar: string;
+  avatar?: string; // Make avatar optional
   joinDate: string;
   totalHabitsCompleted: number;
   currentStreak: number;
@@ -183,7 +184,7 @@ const initialHabits: Habit[] = [
 // Initialize user data
 const initialUser: User = {
   name: 'Sachin Gurjar', // Updated Name
-  avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+  // avatar: 'https://randomuser.me/api/portraits/men/32.jpg', // Removed default avatar
   joinDate: new Date(2023, 9, 15).toISOString(),
   totalHabitsCompleted: 142,
   currentStreak: 0,
@@ -756,13 +757,21 @@ export default function HabitTracker() {
             <div className="relative">
               <button 
                 onClick={() => openModal('profile')}
-                className="flex items-center focus:outline-none"
+                className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-blue-500 dark:border-blue-400 overflow-hidden bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-black"
+                title="View Profile"
               >
-                <img
-                  src={user.avatar}
-                  alt="User Avatar"
-                  className="w-10 h-10 rounded-full border-2 border-blue-500"
-                />
+                {user.avatar ? (
+                  <Image
+                    src={user.avatar}
+                    alt="User Avatar"
+                    width={40} // Required for next/image
+                    height={40} // Required for next/image
+                    className="object-cover" // Ensures image covers the area
+                  />
+                ) : (
+                  // Fallback initials or icon
+                  <span>{user.name.charAt(0)}</span>
+                )}
               </button>
             </div>
           </div>
@@ -1905,11 +1914,20 @@ export default function HabitTracker() {
                 <div>
                   <h2 className="text-xl font-bold mb-6 text-center">My Profile</h2>
                   <div className="flex flex-col items-center space-y-4">
-                     <img
-                       src={user.avatar}
-                       alt="User Avatar"
-                       className="w-24 h-24 rounded-full border-4 border-blue-500 dark:border-blue-400 shadow-lg"
-                     />
+                    <div className="relative flex items-center justify-center w-24 h-24 rounded-full border-4 border-blue-500 dark:border-blue-400 shadow-lg overflow-hidden bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-4xl font-semibold">
+                       {user.avatar ? (
+                         <Image
+                           src={user.avatar}
+                           alt="User Avatar"
+                           width={96} // Required (size - border * 2)
+                           height={96} // Required
+                           className="object-cover"
+                         />
+                       ) : (
+                         // Fallback initials
+                         <span>{user.name.charAt(0)}</span>
+                       )}
+                    </div>
                      <h3 className="text-2xl font-semibold">{user.name}</h3>
                      <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                        Joined on {formatDate(user.joinDate)}
